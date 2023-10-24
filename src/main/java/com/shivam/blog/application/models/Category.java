@@ -6,20 +6,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
-@Table(name="CATEGORY")
+@Table(name="CATEGORIES")
 @NoArgsConstructor
 @Getter
 @Setter
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ID",nullable = false, length = 100)
-    private Integer catId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ID")
+    private Integer id;
     @Column(name="TITLE",nullable = false, length = 100)
     private String title;
     @Column(name="DESCRIPTION",length = 300)
     private String description;
+    @OneToMany(mappedBy = "category",cascade =CascadeType.ALL,fetch =FetchType.LAZY)
+    private List<Post> posts= new ArrayList<>();
 }

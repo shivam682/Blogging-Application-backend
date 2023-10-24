@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @Table(name="USERS")
@@ -17,7 +20,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID")
     private int id;
-
     @Column(name="NAME",nullable = false,length = 100)
     private String name;
     @Column(name="EMAIL")
@@ -26,4 +28,7 @@ public class User {
     private String password;
     @Column(name="ABOUT",length = 300)
     private String about;
+
+    @OneToMany(mappedBy = "user",cascade =CascadeType.ALL,fetch =FetchType.LAZY)
+    private List<Post> posts= new ArrayList<>();
 }
