@@ -1,6 +1,8 @@
 package com.shivam.blog.application.controller;
+import com.shivam.blog.application.paylods.ApiResponse;
 import com.shivam.blog.application.paylods.PostDto;
 import com.shivam.blog.application.services.PostService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +32,26 @@ public class PostController {
     private ResponseEntity<List<PostDto>>getAllPostByCategoryId(@PathVariable Integer categoryId){
         List<PostDto> postDtos = this.postService.getAllPostByCategoryId(categoryId);
         return new ResponseEntity<>(postDtos,HttpStatus.OK);
+    }
+    @GetMapping("/posts")
+    private ResponseEntity<List<PostDto>>getAllposts(){
+        List<PostDto> postDtos = this.postService.getAllPost();
+        return new ResponseEntity<>(postDtos,HttpStatus.OK);
+    }
+    @GetMapping("/posts/{postId}")
+    private ResponseEntity<PostDto>getPostById(@PathVariable Integer postId){
+        PostDto postDto =this.postService.getPostById(postId);
+        return new ResponseEntity<>(postDto,HttpStatus.OK);
+    }
+    @DeleteMapping("/posts/{postId}")
+    private ResponseEntity<ApiResponse>deletePostById(@PathVariable Integer postId){
+        this.postService.deletePost(postId);
+        return new ResponseEntity<>(new ApiResponse("Post deleted ",false),HttpStatus.OK);
+    }
+    @PutMapping("/posts/{postId}")
+    private ResponseEntity<PostDto>updatePostById(@RequestBody PostDto postDto,@PathVariable Integer postId){
+        PostDto updatedPostDto =this.postService.updatePost(postDto,
+                postId);
+        return new ResponseEntity<>(updatedPostDto,HttpStatus.OK);
     }
 }
