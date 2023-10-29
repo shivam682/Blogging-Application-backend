@@ -8,32 +8,34 @@ import lombok.Setter;
 import org.hibernate.annotations.ManyToAny;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
-@Table(name="POSTS")
+@Table(name="posts")
 @NoArgsConstructor
 @Getter
 @Setter
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer postId;
+    private Integer id;
 
-    @Column(name="TITLE",nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String title;
-    @Column(name="CONTENT",nullable = false, length = 10000)
+    @Column(nullable = false, length = 10000)
     private String content;
-    @Column(name="IMAGENAME")
     private String imageName;
-    @Column(name="ADDEDDATE",nullable = false)
+    @Column(nullable = false)
     private Date addedDate;
-
     @ManyToOne
-    @JoinColumn(name="CATEGORY_ID")
+    @JoinColumn(name="category_id")
     private Category category;
     @ManyToOne
-    @JoinColumn(name="USER_ID")
+    @JoinColumn(name="user_id")
     private User user;
-
+    @OneToMany(mappedBy = "post",cascade =CascadeType.ALL,fetch =FetchType.LAZY)
+    private Set<Comment> comments= new HashSet<>();
 }
