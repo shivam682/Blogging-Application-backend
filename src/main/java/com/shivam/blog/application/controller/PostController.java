@@ -1,6 +1,6 @@
 package com.shivam.blog.application.controller;
 import com.shivam.blog.application.paylods.ApiResponse;
-import com.shivam.blog.application.paylods.AppConstants;
+import com.shivam.blog.application.config.AppConstants;
 import com.shivam.blog.application.paylods.PostDto;
 import com.shivam.blog.application.paylods.PostResponse;
 import com.shivam.blog.application.services.FileService;
