@@ -1,12 +1,16 @@
 package com.shivam.blog.application.services.impl;
 
+import com.shivam.blog.application.config.AppConstants;
 import com.shivam.blog.application.exceptions.ResourceNotFoundException;
+import com.shivam.blog.application.models.Role;
 import com.shivam.blog.application.models.User;
 import com.shivam.blog.application.paylods.UserDto;
+import com.shivam.blog.application.repositries.RoleRepo;
 import com.shivam.blog.application.repositries.UserRepo;
 import com.shivam.blog.application.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +22,26 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private RoleRepo roleRepo;
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDto registerUser(UserDto userDto) {
+        User user= this.modelMapper.map(userDto,User.class);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        Role role= this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+        user.getRoles().add(role);
+        User savedUser=this.userRepo.save(user);
+        return this.modelMapper.map(savedUser,UserDto.class);
+
+    }
+
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = this.userDtotoUser(userDto);

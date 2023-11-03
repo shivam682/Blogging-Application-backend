@@ -23,7 +23,6 @@ public class UserDto {
     @Email
     private String email;
     @NotEmpty
-    @Size(min =4, max= 12, message = "password must be of length between 4 nad 12")
     private String password;
     @NotEmpty
     private String about;

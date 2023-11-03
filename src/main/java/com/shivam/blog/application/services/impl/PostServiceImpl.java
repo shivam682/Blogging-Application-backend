@@ -113,6 +113,7 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> searchPost(String keyword) {
 
         List<Post> posts = this.postRepo.findByTitleContainingIgnoreCase(keyword);
+
         return posts.stream().map((post)-> this.modelMapper.map(post,PostDto.class)).collect(Collectors.toList());
 
     }

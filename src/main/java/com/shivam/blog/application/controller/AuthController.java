@@ -1,8 +1,11 @@
 package com.shivam.blog.application.controller;
 
+import com.shivam.blog.application.exceptions.ApiException;
 import com.shivam.blog.application.paylods.JwtRequest;
 import com.shivam.blog.application.paylods.JwtResponse;
+import com.shivam.blog.application.paylods.UserDto;
 import com.shivam.blog.application.security.JwtTokenHelper;
+import com.shivam.blog.application.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class AuthController {
 
     @Autowired
     private JwtTokenHelper helper;
+
+    @Autowired
+    private UserService userService;
 
     private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
@@ -55,15 +61,17 @@ public class AuthController {
 
 
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(" Invalid Username or Password  !!");
+            throw new ApiException("Invalid password!!");
         }
 
     }
-
-    @ExceptionHandler(BadCredentialsException.class)
-    public String exceptionHandler() {
-        return "Credentials Invalid !!";
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> login(@RequestBody UserDto userDto) {
+    UserDto userDto1= this.userService.registerUser(userDto);
+    return new ResponseEntity<>(userDto1,HttpStatus.CREATED);
     }
+
+
 
 }
 

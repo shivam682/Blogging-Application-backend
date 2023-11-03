@@ -3,6 +3,7 @@ package com.shivam.blog.application.exceptions;
 import com.shivam.blog.application.paylods.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,5 +33,11 @@ public class GlobalExceptions {
             resp.put(fieldName,message);
         });
         return new ResponseEntity<Map<String, String>>(resp,HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ApiException.class)
+    private ResponseEntity<ApiResponse> apiExceptionHandler(ApiException ex){
+        String message= ex.getMessage();
+        ApiResponse apiResponse = new ApiResponse(message,false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 }
