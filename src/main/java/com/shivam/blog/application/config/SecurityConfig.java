@@ -35,12 +35,18 @@ public class SecurityConfig<BaseLdapPathContextSource> {
     @Autowired
     private JwtAuthenticationFilter filter;
 
+    private static final String [] PUBLIC_URLS={
+            "/auth/**",
+            "/swagger-ui/**",
+            "/v3/api-docs",
+
+    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 
         http.csrf(csrf -> csrf.disable()).cors(cors->cors.disable())
-                .authorizeHttpRequests(auth->auth.requestMatchers("/auth/login").permitAll().requestMatchers("/auth/register").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(auth->auth.requestMatchers(PUBLIC_URLS).permitAll().anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
