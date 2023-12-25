@@ -45,3 +45,4 @@ This is a comprehensive blogging application backend built using Spring Boot. It
    mvn spring-boot:run
 4. Access the application in your browser:
    http://localhost:9095
+
