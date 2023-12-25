@@ -35,7 +35,13 @@ This is a comprehensive blogging application backend built using Spring Boot. It
 
    ```bash
    git clone https://github.com/your-username/blogging-application.git
-  ```bash
+2. Navigate to the project directory:
+
+   ```bash
    cd blogging-application
-  ```bash
+3. Run the application:
+
+   ```bash
    mvn spring-boot:run
+4. Access the application in your browser:
+   http://localhost:9095
