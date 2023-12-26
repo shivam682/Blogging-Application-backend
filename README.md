@@ -34,11 +34,11 @@ This is a comprehensive blogging application backend built using Spring Boot. It
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/blogging-application.git
+   https://github.com/shivam682/Blogging-Application-backend.git
 2. Navigate to the project directory:
 
    ```bash
-   cd blogging-application
+   cd Blogging-Application-backend
 3. Run the application:
 
    ```bash
