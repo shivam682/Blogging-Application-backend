@@ -3,6 +3,7 @@
 ## Overview
 
 This is a comprehensive blogging application backend built using Spring Boot. It provides user registration, user management with assigned roles, and CRUD operations for blog posts and comments.
+Please refer Ap-Documentation.pdf present in the repo for understanding of schema and Api formats.
 
 ## Features
 
